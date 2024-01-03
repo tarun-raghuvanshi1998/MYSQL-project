@@ -1,0 +1,1551 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 46
+Server version: 8.0.34 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| itv_andheri        |
+| itv_borivali       |
+| itv_thane          |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> USE itv_andheri;
+Database changed
+mysql> SHOW TABLES;
++-----------------------+
+| Tables_in_itv_andheri |
++-----------------------+
+| course                |
+| customer              |
+| demo_table            |
+| employee              |
+| employee_info         |
+| employee_view         |
+| itv_student           |
+| labour_salary         |
+| orders                |
+| person                |
+| products              |
+| sales_tbl             |
+| student               |
+| suppliers             |
+| temp_emp              |
+| temp_employee         |
+| worker                |
++-----------------------+
+17 rows in set (0.00 sec)
+
+mysql> des
+    -> ^C
+mysql> DESC products;
++-------------------+--------------+------+-----+---------+-------+
+| Field             | Type         | Null | Key | Default | Extra |
++-------------------+--------------+------+-----+---------+-------+
+| id                | int          | NO   | PRI | NULL    |       |
+| productname       | varchar(150) | YES  |     | NULL    |       |
+| partnumber        | int          | YES  |     | NULL    |       |
+| productlabel      | int          | YES  |     | NULL    |       |
+| startinginventory | int          | YES  |     | NULL    |       |
+| inventoryReceived | int          | YES  |     | NULL    |       |
+| inventoryShipped  | int          | YES  |     | NULL    |       |
+| inventoryOnHand   | int          | YES  |     | NULL    |       |
+| MinimunRequirerd  | int          | YES  |     | NULL    |       |
++-------------------+--------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> DESC suppliers;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| id        | int          | NO   | PRI | NULL    |       |
+| suppliers | varchar(200) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM suppliers;
++----+----------------+
+| id | suppliers      |
++----+----------------+
+|  1 | ShockWave Tech |
+|  2 | CDW            |
+|  3 | Acme Tech      |
+|  4 | CloudTail      |
+|  5 | Alpha Selter   |
++----+----------------+
+5 rows in set (0.00 sec)
+
+mysql> DESC products;
++-------------------+--------------+------+-----+---------+-------+
+| Field             | Type         | Null | Key | Default | Extra |
++-------------------+--------------+------+-----+---------+-------+
+| id                | int          | NO   | PRI | NULL    |       |
+| productname       | varchar(150) | YES  |     | NULL    |       |
+| partnumber        | int          | YES  |     | NULL    |       |
+| productlabel      | int          | YES  |     | NULL    |       |
+| startinginventory | int          | YES  |     | NULL    |       |
+| inventoryReceived | int          | YES  |     | NULL    |       |
+| inventoryShipped  | int          | YES  |     | NULL    |       |
+| inventoryOnHand   | int          | YES  |     | NULL    |       |
+| MinimunRequirerd  | int          | YES  |     | NULL    |       |
++-------------------+--------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT * FROM products;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO products VALUES
+    -> (101,"Dell Server","XP 2000","Dell Server XP 2000",100007,35,25,100017,15);
+ERROR 1366 (HY000): Incorrect integer value: 'XP 2000' for column 'partnumber' at row 1
+mysql> DROP TABLE products;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC products;
+ERROR 1146 (42S02): Table 'itv_andheri.products' doesn't exist
+mysql> CREATE TABLE products(
+    -> id int PRIMARY KEY,
+    -> productname varchar(200),
+    -> partnumber varchar(150),
+    -> productlabel varchar(200),
+    -> startinginventory int,
+    -> inventoryreceived int,
+    -> inventoryshipped int,
+    -> inventoryonhand int,
+    -> minimumrequired int
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC products;
++-------------------+--------------+------+-----+---------+-------+
+| Field             | Type         | Null | Key | Default | Extra |
++-------------------+--------------+------+-----+---------+-------+
+| id                | int          | NO   | PRI | NULL    |       |
+| productname       | varchar(200) | YES  |     | NULL    |       |
+| partnumber        | varchar(150) | YES  |     | NULL    |       |
+| productlabel      | varchar(200) | YES  |     | NULL    |       |
+| startinginventory | int          | YES  |     | NULL    |       |
+| inventoryreceived | int          | YES  |     | NULL    |       |
+| inventoryshipped  | int          | YES  |     | NULL    |       |
+| inventoryonhand   | int          | YES  |     | NULL    |       |
+| minimumrequired   | int          | YES  |     | NULL    |       |
++-------------------+--------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> INSERT INTO products VALUES
+    -> (101,"Dell Server","XP 2000","Dell Server XP 2000",100007,35,25,100017,15);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM products;
++-----+-------------+------------+---------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| id  | productname | partnumber | productlabel        | startinginventory | inventoryreceived | inventoryshipped | inventoryonhand | minimumrequired |
++-----+-------------+------------+---------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| 101 | Dell Server | XP 2000    | Dell Server XP 2000 |            100007 |                35 |               25 |          100017 |              15 |
++-----+-------------+------------+---------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO products VALUES
+    -> (102,"Google Chromebooks","1","Google Chromebooks- 1.0",100,75,654,-479,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM products;
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| id  | productname        | partnumber | productlabel            | startinginventory | inventoryreceived | inventoryshipped | inventoryonhand | minimumrequired |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| 101 | Dell Server        | XP 2000    | Dell Server XP 2000     |            100007 |                35 |               25 |          100017 |              15 |
+| 102 | Google Chromebooks | 1          | Google Chromebooks- 1.0 |               100 |                75 |              654 |            -479 |              20 |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE orders(
+    -> id int PRIMARY KEY,
+    -> title varchar(100),
+    -> first varchar(150),
+    -> last varchar(200),
+    -> productld varchar(100),
+    -> numbershipped int,
+    ->
+    -> numbershipped int,
+    ->
+    -> ^C
+mysql> CREATE TABLE orders(
+    -> id int PRIMARY KEY,
+    -> title varchar(100),
+    -> first varchar(150),
+    -> last varchar(200),
+    -> productld varchar(100),
+    -> numbershipped int,
+    -> orderdate DATE
+    -> );
+ERROR 1050 (42S01): Table 'orders' already exists
+mysql> SHOW TABLES;
++-----------------------+
+| Tables_in_itv_andheri |
++-----------------------+
+| course                |
+| customer              |
+| demo_table            |
+| employee              |
+| employee_info         |
+| employee_view         |
+| itv_student           |
+| labour_salary         |
+| orders                |
+| person                |
+| products              |
+| sales_tbl             |
+| student               |
+| suppliers             |
+| temp_emp              |
+| temp_employee         |
+| worker                |
++-----------------------+
+17 rows in set (0.00 sec)
+
+mysql> SELECT * FROM orders;
++----------+-------------+--------------+----------+------------+
+| order_id | customer_id | product_name | quantity | order_date |
++----------+-------------+--------------+----------+------------+
+|     1001 |           1 | Iphone       |        2 | 2023-10-20 |
+|     1002 |           2 | Earpords     |        5 | 2023-05-17 |
+|     1003 |           2 | Charger      |       10 | 2023-01-19 |
+|     1004 |           3 | Pendrive     |       50 | 2023-10-13 |
+|     1005 |           3 | Laptop       |        5 | 2023-11-08 |
+|     1006 |           4 | Tablet       |       22 | 2022-08-15 |
+|     1007 |           1 | Nokia        |       10 | 2022-01-05 |
+|     1008 |           2 | Pen          |      300 | 2023-09-11 |
++----------+-------------+--------------+----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> DROP TABLE orders;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT * FROM orders;
+ERROR 1146 (42S02): Table 'itv_andheri.orders' doesn't exist
+mysql> CREATE TABLE orders(
+    -> id int PRIMARY KEY,
+    -> first varchar(150),
+    -> last varchar(200),
+    -> productld varchar(100),
+    -> numbershipped int,
+    -> orderdate DATE
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC orders;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| id            | int          | NO   | PRI | NULL    |       |
+| first         | varchar(150) | YES  |     | NULL    |       |
+| last          | varchar(200) | YES  |     | NULL    |       |
+| productld     | varchar(100) | YES  |     | NULL    |       |
+| numbershipped | int          | YES  |     | NULL    |       |
+| orderdate     | date         | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE TABLE purchases(
+    -> id int PRIMARY KEY,
+    -> supplierld varchar(100),
+    -> productld varchar(150),
+    -> numberreceived int,
+    -> purchasedate DATE
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESC purchases;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| id             | int          | NO   | PRI | NULL    |       |
+| supplierld     | varchar(100) | YES  |     | NULL    |       |
+| productld      | varchar(150) | YES  |     | NULL    |       |
+| numberreceived | int          | YES  |     | NULL    |       |
+| purchasedate   | date         | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> ^C
+mysql> ^C
+mysql>
+mysql> mysql> SHOW DATABASES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> SHOW DATABASES' at line 1
+mysql> +--------------------+
+    -> | Database           |
+    -> +--------------------+
+    -> | information_schema |
+    -> | itv_andheri        |
+    -> | itv_borivali       |
+    -> | itv_thane          |
+    -> | mysql              |
+    -> | performance_schema |
+    -> | sakila             |
+    -> | sys                |
+    -> | world              |
+    -> +--------------------+
+    -> 9 rows in set (0.00 sec)
+    ->
+    -> mysql> USE itv_andheri;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| Database           |
++--------------------+
+| informati' at line 1
+mysql> Database changed
+    -> mysql> SHOW TABLES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> SHOW TABLES' at line 1
+mysql> +-----------------------+
+    -> | Tables_in_itv_andheri |
+    -> +-----------------------+
+    -> | course                |
+    -> | customer              |
+    -> | demo_table            |
+    -> | employee              |
+    -> | employee_info         |
+    -> | employee_view         |
+    -> | itv_student           |
+    -> | labour_salary         |
+    -> | orders                |
+    -> | person                |
+    -> | products              |
+    -> | sales_tbl             |
+    -> | student               |
+    -> | suppliers             |
+    -> | temp_emp              |
+    -> | temp_employee         |
+    -> | worker                |
+    -> +-----------------------+
+    -> 17 rows in set (0.00 sec)
+    ->
+    -> mysql> des
+    ->     -> ^C
+    -> mysql> DESC products;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-----------------------+
+| Tables_in_itv_andheri |
++-----------------------+
+| ' at line 1
+mysql> +-------------------+--------------+------+-----+---------+-------+
+    -> | Field             | Type         | Null | Key | Default | Extra |
+    -> +-------------------+--------------+------+-----+---------+-------+
+    -> | id                | int          | NO   | PRI | NULL    |       |
+    -> | productname       | varchar(150) | YES  |     | NULL    |       |
+    -> | partnumber        | int          | YES  |     | NULL    |       |
+    -> | productlabel      | int          | YES  |     | NULL    |       |
+    -> | startinginventory | int          | YES  |     | NULL    |       |
+    -> | inventoryReceived | int          | YES  |     | NULL    |       |
+    -> | inventoryShipped  | int          | YES  |     | NULL    |       |
+    -> | inventoryOnHand   | int          | YES  |     | NULL    |       |
+    -> | MinimunRequirerd  | int          | YES  |     | NULL    |       |
+    -> +-------------------+--------------+------+-----+---------+-------+
+    -> 9 rows in set (0.00 sec)
+    ->
+    -> mysql> DESC suppliers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------------+--------------+------+-----+---------+-------+
+| Field     ' at line 1
+mysql> +-----------+--------------+------+-----+---------+-------+
+    -> | Field     | Type         | Null | Key | Default | Extra |
+    -> +-----------+--------------+------+-----+---------+-------+
+    -> | id        | int          | NO   | PRI | NULL    |       |
+    -> | suppliers | varchar(200) | YES  |     | NULL    |       |
+    -> +-----------+--------------+------+-----+---------+-------+
+    -> 2 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM suppliers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-----------+--------------+------+-----+---------+-------+
+| Field     | Type  ' at line 1
+mysql> +----+----------------+
+    -> | id | suppliers      |
+    -> +----+----------------+
+    -> |  1 | ShockWave Tech |
+    -> |  2 | CDW            |
+    -> |  3 | Acme Tech      |
+    -> |  4 | CloudTail      |
+    -> |  5 | Alpha Selter   |
+    -> +----+----------------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> DESC products;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+----+----------------+
+| id | suppliers      |
++----+----------------+
+|  1 | S' at line 1
+mysql> +-------------------+--------------+------+-----+---------+-------+
+    -> | Field             | Type         | Null | Key | Default | Extra |
+    -> +-------------------+--------------+------+-----+---------+-------+
+    -> | id                | int          | NO   | PRI | NULL    |       |
+    -> | productname       | varchar(150) | YES  |     | NULL    |       |
+    -> | partnumber        | int          | YES  |     | NULL    |       |
+    -> | productlabel      | int          | YES  |     | NULL    |       |
+    -> | startinginventory | int          | YES  |     | NULL    |       |
+    -> | inventoryReceived | int          | YES  |     | NULL    |       |
+    -> | inventoryShipped  | int          | YES  |     | NULL    |       |
+    -> | inventoryOnHand   | int          | YES  |     | NULL    |       |
+    -> | MinimunRequirerd  | int          | YES  |     | NULL    |       |
+    -> +-------------------+--------------+------+-----+---------+-------+
+    -> 9 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM products;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------------+--------------+------+-----+---------+-------+
+| Field     ' at line 1
+mysql> Empty set (0.00 sec)
+    ->
+    -> mysql> INSERT INTO products VALUES
+    ->     -> (101,"Dell Server","XP 2000","Dell Server XP 2000",100007,35,25,100017,15);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Empty set (0.00 sec)
+
+mysql> INSERT INTO products VALUES
+    -> (101,"Dell Serve' at line 1
+mysql> ERROR 1366 (HY000): Incorrect integer value: 'XP 2000' for column 'partnumber' at row 1
+    -> mysql> DROP TABLE products;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1366 (HY000): Incorrect integer value: 'XP 2000' for column 'partnumber' a' at line 1
+mysql> Query OK, 0 rows affected (0.02 sec)
+    ->
+    -> mysql> DESC products;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC products' at line 1
+mysql> ERROR 1146 (42S02): Table 'itv_andheri.products' doesn't exist
+    '> mysql> CREATE TABLE products(
+    '>     -> id int PRIMARY KEY,
+    '>     -> productname varchar(200),
+    '>     -> partnumber varchar(150),
+    '>     -> productlabel varchar(200),
+    '>     -> startinginventory int,
+    '>     -> inventoryreceived int,
+    '>     -> inventoryshipped int,
+    '>     -> inventoryonhand int,
+    '>     -> minimumrequired int
+    '>     -> );
+    '> Query OK, 0 rows affected (0.02 sec)
+    '>
+    '> mysql> DESC products;
+    '> +-------------------+--------------+------+-----+---------+-------+
+    '> | Field             | Type         | Null | Key | Default | Extra |
+    '> +-------------------+--------------+------+-----+---------+-------+
+    '> | id                | int          | NO   | PRI | NULL    |       |
+    '> | productname       | varchar(200) | YES  |     | NULL    |       |
+    '> | partnumber        | varchar(150) | YES  |     | NULL    |       |
+    '> | productlabel      | varchar(200) | YES  |     | NULL    |       |
+    '> | startinginventory | int          | YES  |     | NULL    |       |
+    '> | inventoryreceived | int          | YES  |     | NULL    |       |
+    '> | inventoryshipped  | int          | YES  |     | NULL    |       |
+    '> | inventoryonhand   | int          | YES  |     | NULL    |       |
+    '> | minimumrequired   | int          | YES  |     | NULL    |       |
+    '> +-------------------+--------------+------+-----+---------+-------+
+    '> 9 rows in set (0.00 sec)
+    '>
+    '> mysql> INSERT INTO products VALUES
+    '>     -> (101,"Dell Server","XP 2000","Dell Server XP 2000",100007,35,25,100017,15);
+    '> Query OK, 1 row affected (0.01 sec)
+    '>
+    '> mysql> SELECT * FROM products;
+    '> +-----+-------------+------------+---------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+    '> | id  | productname | partnumber | productlabel        | startinginventory | inventoryreceived | inventoryshipped | inventoryonhand | minimumrequired |
+    '> +-----+-------------+------------+---------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+    '> | 101 | Dell Server | XP 2000    | Dell Server XP 2000 |            100007 |                35 |               25 |          100017 |              15 |
+    '> +-----+-------------+------------+---------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+    '> 1 row in set (0.00 sec)
+    '>
+    '> mysql> INSERT INTO products VALUES
+    '>     -> (102,"Google Chromebooks","1","Google Chromebooks- 1.0",100,75,654,-479,20);
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| itv_andheri        |
+| itv_borivali       |
+| itv_thane          |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> USE itv_andheri;
+Database changed
+mysql> SHOW TABLES;
++-----------------------+
+| Tables_in_itv_andheri |
++-----------------------+
+| course                |
+| customer              |
+| demo_table            |
+| employee              |
+| employee_info         |
+| employee_view         |
+| itv_student           |
+| labour_salary         |
+| orders                |
+| person                |
+| products              |
+| purchases             |
+| sales_tbl             |
+| student               |
+| suppliers             |
+| temp_emp              |
+| temp_employee         |
+| worker                |
++-----------------------+
+18 rows in set (0.00 sec)
+
+mysql> DESC orders;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| id            | int          | NO   | PRI | NULL    |       |
+| first         | varchar(150) | YES  |     | NULL    |       |
+| last          | varchar(200) | YES  |     | NULL    |       |
+| productld     | varchar(100) | YES  |     | NULL    |       |
+| numbershipped | int          | YES  |     | NULL    |       |
+| orderdate     | date         | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> INSERT INTO orders VALUES
+    -> (1,"Jhon","Doe",123,5,"2023-11-05"),
+    -> (2,"Jane","Smith",456,3,"2023-11-06");
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO orders VALUES
+    -> (3,"Mike","Jhonson",789,8,"2023-11-07"),
+    -> (4,"Alice","Brown",101,2,"2023-11-08"),
+    -> (5,"David","Lee",222,6,"2023-11-09"),
+    -> (6,"Sarah","Wilson",333,4,"2023-11-10");
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *  FROM orders;
++----+-------+---------+-----------+---------------+------------+
+| id | first | last    | productld | numbershipped | orderdate  |
++----+-------+---------+-----------+---------------+------------+
+|  1 | Jhon  | Doe     | 123       |             5 | 2023-11-05 |
+|  2 | Jane  | Smith   | 456       |             3 | 2023-11-06 |
+|  3 | Mike  | Jhonson | 789       |             8 | 2023-11-07 |
+|  4 | Alice | Brown   | 101       |             2 | 2023-11-08 |
+|  5 | David | Lee     | 222       |             6 | 2023-11-09 |
+|  6 | Sarah | Wilson  | 333       |             4 | 2023-11-10 |
++----+-------+---------+-----------+---------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO orders VALUES
+    -> (7,"Michael","Smith",777,7,"2023-11-11"),
+    -> (8,"Emma","Davis",555,9,"2023-11-12"),
+    -> (9,"William","Jones",888,1,"2023-11-13");
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *  FROM orders;
++----+---------+---------+-----------+---------------+------------+
+| id | first   | last    | productld | numbershipped | orderdate  |
++----+---------+---------+-----------+---------------+------------+
+|  1 | Jhon    | Doe     | 123       |             5 | 2023-11-05 |
+|  2 | Jane    | Smith   | 456       |             3 | 2023-11-06 |
+|  3 | Mike    | Jhonson | 789       |             8 | 2023-11-07 |
+|  4 | Alice   | Brown   | 101       |             2 | 2023-11-08 |
+|  5 | David   | Lee     | 222       |             6 | 2023-11-09 |
+|  6 | Sarah   | Wilson  | 333       |             4 | 2023-11-10 |
+|  7 | Michael | Smith   | 777       |             7 | 2023-11-11 |
+|  8 | Emma    | Davis   | 555       |             9 | 2023-11-12 |
+|  9 | William | Jones   | 888       |             1 | 2023-11-13 |
++----+---------+---------+-----------+---------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> INSERT INTO orders VALUES
+    -> (10,
+    -> "Olivia","Gracia",444,4,"2023-11-14");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO orders VALUES
+    -> (11,"Noah","Martinez",666,6,"2023-11-15"),
+    -> (12,"Sophia","Lopez",111,3,"2023-11-16"),
+    -> (13,"Elijah","Wright",333,7,"2023-11-17"),
+    -> (14,"Ava","Parez",999,10,"2023-11-18"),
+    -> (15,"James","Turner",123,5,"2023-11-19");
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *  FROM orders;
++----+---------+----------+-----------+---------------+------------+
+| id | first   | last     | productld | numbershipped | orderdate  |
++----+---------+----------+-----------+---------------+------------+
+|  1 | Jhon    | Doe      | 123       |             5 | 2023-11-05 |
+|  2 | Jane    | Smith    | 456       |             3 | 2023-11-06 |
+|  3 | Mike    | Jhonson  | 789       |             8 | 2023-11-07 |
+|  4 | Alice   | Brown    | 101       |             2 | 2023-11-08 |
+|  5 | David   | Lee      | 222       |             6 | 2023-11-09 |
+|  6 | Sarah   | Wilson   | 333       |             4 | 2023-11-10 |
+|  7 | Michael | Smith    | 777       |             7 | 2023-11-11 |
+|  8 | Emma    | Davis    | 555       |             9 | 2023-11-12 |
+|  9 | William | Jones    | 888       |             1 | 2023-11-13 |
+| 10 | Olivia  | Gracia   | 444       |             4 | 2023-11-14 |
+| 11 | Noah    | Martinez | 666       |             6 | 2023-11-15 |
+| 12 | Sophia  | Lopez    | 111       |             3 | 2023-11-16 |
+| 13 | Elijah  | Wright   | 333       |             7 | 2023-11-17 |
+| 14 | Ava     | Parez    | 999       |            10 | 2023-11-18 |
+| 15 | James   | Turner   | 123       |             5 | 2023-11-19 |
++----+---------+----------+-----------+---------------+------------+
+15 rows in set (0.00 sec)
+
+    '> +-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+    '> | id  | productname        | partnumber | productlabel            | startinginventory | inventoryreceived | inventoryshipped | inventoryonhand | minimumrequired |
+    '> +-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+    '> | 101 | Dell Server        | XP 2000    | Dell Server XP 2000     |            100007 |                35 |               25 |          100017 |              15 |
+    '> | 102 | Google Chromebooks | 1          | Google Chromebooks- 1.0 |               100 |                75 |              654 |            -479 |              20 |
+    '> +-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+    '> 2 rows in set (0.00 sec)
+    '>
+    '> mysql> CREATE TABLE orders(
+    '>     -> id int PRIMARY KEY,
+    '>     -> title varchar(100),
+    '>     -> first varchar(150),
+    '>     -> last varchar(200),
+    '>     -> productld varchar(100),
+    '>     -> numbershipped int,
+    '>     ->
+    '>     -> numbershipped int,
+    '>     ->
+    '>     -> ^C
+    '> mysql> CREATE TABLE orders(
+    '>     -> id int PRIMARY KEY,
+    '>     -> title varchar(100),
+    '>     -> first varchar(150),
+    '>     -> last varchar(200),
+    '>     -> productld varchar(100),
+    '>     -> numbershipped int,
+    '>     -> orderdate DATE
+    '>     -> );
+    '> ERROR 1050 (42S01): Table 'orders' already exists
+    '> mysql> SHOW TABLES;
+    '> +-----------------------+
+    '> | Tables_in_itv_andheri |
+    '> +-----------------------+
+    '> | course                |
+    '> | customer              |
+    '> | demo_table            |
+    '> | employee              |
+    '> | employee_info         |
+    '> | employee_view         |
+    '> | itv_student           |
+    '> | labour_salary         |
+    '> | orders                |
+    '> | person                |
+    '> | products              |
+    '> | sales_tbl             |
+    '> | student               |
+    '> | suppliers             |
+    '> | temp_emp              |
+    '> | temp_employee         |
+    '> | worker                |
+    '> +-----------------------+
+    '> 17 rows in set (0.00 sec)
+    '>
+    '> mysql> SELECT * FROM orders;
+    '> +----------+-------------+--------------+----------+------------+
+    '> | order_id | customer_id | product_name | quantity | order_date |
+    '> +----------+-------------+--------------+----------+------------+
+    '> |     1001 |           1 | Iphone       |        2 | 2023-10-20 |
+    '> |     1002 |           2 | Earpords     |        5 | 2023-05-17 |
+    '> |     1003 |           2 | Charger      |       10 | 2023-01-19 |
+    '> |     1004 |           3 | Pendrive     |       50 | 2023-10-13 |
+    '> |     1005 |           3 | Laptop       |        5 | 2023-11-08 |
+    '> |     1006 |           4 | Tablet       |       22 | 2022-08-15 |
+    '> |     1007 |           1 | Nokia        |       10 | 2022-01-05 |
+    '> |     1008 |           2 | Pen          |      300 | 2023-09-11 |
+    '> +----------+-------------+--------------+----------+------------+
+    '> 8 rows in set (0.00 sec)
+    '>
+    '> mysql> DROP TABLE orders;
+    '> Query OK, 0 rows affected (0.02 sec)
+    '>
+    '> mysql> SELECT * FROM orders;
+    '> ERROR 1146 (42S02): Table 'itv_andheri.orders' doesn't exist
+    -> mysql> CREATE TABLE orders(
+    ->     -> id int PRIMARY KEY,
+    ->     -> first varchar(150),
+    ->     -> last varchar(200),
+    ->     -> productld varchar(100),
+    ->     -> numbershipped int,
+    ->     -> orderdate DATE
+    ->     -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1146 (42S02): Table 'itv_andheri.products' doesn't exist
+mysql> CREATE TAB' at line 1
+mysql> Query OK, 0 rows affected (0.02 sec)
+    ->
+    -> mysql> DESC orders;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC orders' at line 1
+mysql> +---------------+--------------+------+-----+---------+-------+
+    -> | Field         | Type         | Null | Key | Default | Extra |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> | id            | int          | NO   | PRI | NULL    |       |
+    -> | first         | varchar(150) | YES  |     | NULL    |       |
+    -> | last          | varchar(200) | YES  |     | NULL    |       |
+    -> | productld     | varchar(100) | YES  |     | NULL    |       |
+    -> | numbershipped | int          | YES  |     | NULL    |       |
+    -> | orderdate     | date         | YES  |     | NULL    |       |
+    -> +---------------+--------------+------+-----+---------+-------+
+    -> 6 rows in set (0.00 sec)
+    ->
+    -> mysql> CREATE TABLE purchases(
+    ->     -> id int PRIMARY KEY,
+    ->     -> supplierld varchar(100),
+    ->     -> productld varchar(150),
+    ->     -> numberreceived int,
+    ->     -> purchasedate DATE
+    ->     -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+---------------+--------------+------+-----+---------+-------+
+| Field         ' at line 1
+mysql> Query OK, 0 rows affected (0.03 sec)
+    ->
+    -> mysql> DESC purchases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESC purchases' at line 1
+mysql> +----------------+--------------+------+-----+---------+-------+
+    -> | Field          | Type         | Null | Key | Default | Extra |
+    -> +----------------+--------------+------+-----+---------+-------+
+    -> | id             | int          | NO   | PRI | NULL    |       |
+    -> | supplierld     | varchar(100) | YES  |     | NULL    |       |
+    -> | productld      | varchar(150) | YES  |     | NULL    |       |
+    -> | numberreceived | int          | YES  |     | NULL    |       |
+    -> | purchasedate   | date         | YES  |     | NULL    |       |
+    -> +----------------+--------------+------+-----+---------+-------+
+    -> 5 rows in set 
+    
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| itv_andheri        |
+| itv_borivali       |
+| itv_thane          |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> USE itv_andheri;
+Database changed
+mysql> SHOW TABLES;
++-----------------------+
+| Tables_in_itv_andheri |
++-----------------------+
+| course                |
+| customer              |
+| demo_table            |
+| employee              |
+| employee_info         |
+| employee_view         |
+| itv_student           |
+| labour_salary         |
+| orders                |
+| person                |
+| products              |
+| purchases             |
+| sales_tbl             |
+| student               |
+| suppliers             |
+| temp_emp              |
+| temp_employee         |
+| worker                |
++-----------------------+
+18 rows in set (0.00 sec)
+
+mysql> SELECT * FROM products;
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| id  | productname        | partnumber | productlabel            | startinginventory | inventoryreceived | inventoryshipped | inventoryonhand | minimumrequired |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| 101 | Dell Server        | XP 2000    | Dell Server XP 2000     |            100007 |                35 |               25 |          100017 |              15 |
+| 102 | Google Chromebooks | 1          | Google Chromebooks- 1.0 |               100 |                75 |              654 |            -479 |              20 |
+| 103 | Cisco Router       | 10         | Cisco Router- 10X       |                45 |               143 |               76 |              86 |              88 |
+| 104 | Apple              | 25         | Apple 2000              |              2002 |                71 |               81 |             114 |              16 |
+| 105 | Samsung            | 25         | Samsung 10000           |              2022 |                51 |              851 |              11 |              12 |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO products VALUES
+    -> (106,"IBall",112,"IBall 1001",2001,100,350,225,70),
+    -> (107,"Epsion",120,"Epsion 1002",2003,90,250,119,80),
+    -> (108,"Zebronics",145,"Zebronics 1003",2004,110,365,111,10),
+    -> (109,"Asus",54321,8765,150,75,45,105,30);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FRIOM products;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FRIOM products' at line 1
+mysql> SELECT * FROM products;
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| id  | productname        | partnumber | productlabel            | startinginventory | inventoryreceived | inventoryshipped | inventoryonhand | minimumrequired |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| 101 | Dell Server        | XP 2000    | Dell Server XP 2000     |            100007 |                35 |               25 |          100017 |              15 |
+| 102 | Google Chromebooks | 1          | Google Chromebooks- 1.0 |               100 |                75 |              654 |            -479 |              20 |
+| 103 | Cisco Router       | 10         | Cisco Router- 10X       |                45 |               143 |               76 |              86 |              88 |
+| 104 | Apple              | 25         | Apple 2000              |              2002 |                71 |               81 |             114 |              16 |
+| 105 | Samsung            | 25         | Samsung 10000           |              2022 |                51 |              851 |              11 |              12 |
+| 106 | IBall              | 112        | IBall 1001              |              2001 |               100 |              350 |             225 |              70 |
+| 107 | Epsion             | 120        | Epsion 1002             |              2003 |                90 |              250 |             119 |              80 |
+| 108 | Zebronics          | 145        | Zebronics 1003          |              2004 |               110 |              365 |             111 |              10 |
+| 109 | Asus               | 54321      | 8765                    |               150 |                75 |               45 |             105 |              30 |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+9 rows in set (0.00 sec)
+
+mysql> INSERT INTO products VALUES
+    -> (110,"Frontech",98765,4321,200,100,60,140,40),
+    -> (111,"Motherboard",13579,2468,80,40,20,60,15),
+    -> (112,"Keyboard",24680,3579,120,60,30,90,25),
+    -> (113,"Zipdrive",11111,2222,50,25,15,40,10),
+    -> (114,"Speaker",
+    -> 88888,9999,90,45,30,75,10);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO products VALUES
+    -> (115,"Monitor",44444,5555,70,35,25,50,5),
+    -> (116,"DVD drive",77777,6666,110,55,40,70,20),
+    -> (117,"CD drive",1234,5678,150,75,60,165,35),
+    -> (118,"Printer",5678,9876,80,40,20,100,10),
+    -> (119,"Mouse",9876,4321,120,60,80,100,15),
+    -> (120,"HP Laptop",5555,1111,100,50,30,120,25
+    ->
+    -> );
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO products VALUES
+    ->
+    -> (121,"Vivo",2222,3333,80,40,50,70,15),
+    -> (122,"Sony",7777,4444,60,30,20,70,10),
+    -> (123,"LG",8888,9999,120,60,70,110,25),
+    -> (124,"Nokia",1111,2222,90,45,40,95,20),
+    -> (125,"TATA",5555,6666,70,35,50,55,15),
+    -> (126,"Lenovo",3333,4444,110,55,60,105,30),
+    -> (127,"Honda",8888,7777,80,40,45,75,10),
+    -> (128,"Bajaj",1111,9999,130,65,70,125,25),
+    -> (129,"Mercedes Benz",7777,8888,90,45,50,85,20),
+    -> (130,"Range Rover",4444,5555,120,60,70,110,30),
+    -> (131,"Rolex",3333,2222,60,30,40,50,10);
+Query OK, 11 rows affected (0.01 sec)
+Records: 11  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM products;
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| id  | productname        | partnumber | productlabel            | startinginventory | inventoryreceived | inventoryshipped | inventoryonhand | minimumrequired |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| 101 | Dell Server        | XP 2000    | Dell Server XP 2000     |            100007 |                35 |               25 |          100017 |              15 |
+| 102 | Google Chromebooks | 1          | Google Chromebooks- 1.0 |               100 |                75 |              654 |            -479 |              20 |
+| 103 | Cisco Router       | 10         | Cisco Router- 10X       |                45 |               143 |               76 |              86 |              88 |
+| 104 | Apple              | 25         | Apple 2000              |              2002 |                71 |               81 |             114 |              16 |
+| 105 | Samsung            | 25         | Samsung 10000           |              2022 |                51 |              851 |              11 |              12 |
+| 106 | IBall              | 112        | IBall 1001              |              2001 |               100 |              350 |             225 |              70 |
+| 107 | Epsion             | 120        | Epsion 1002             |              2003 |                90 |              250 |             119 |              80 |
+| 108 | Zebronics          | 145        | Zebronics 1003          |              2004 |               110 |              365 |             111 |              10 |
+| 109 | Asus               | 54321      | 8765                    |               150 |                75 |               45 |             105 |              30 |
+| 110 | Frontech           | 98765      | 4321                    |               200 |               100 |               60 |             140 |              40 |
+| 111 | Motherboard        | 13579      | 2468                    |                80 |                40 |               20 |              60 |              15 |
+| 112 | Keyboard           | 24680      | 3579                    |               120 |                60 |               30 |              90 |              25 |
+| 113 | Zipdrive           | 11111      | 2222                    |                50 |                25 |               15 |              40 |              10 |
+| 114 | Speaker            | 88888      | 9999                    |                90 |                45 |               30 |              75 |              10 |
+| 115 | Monitor            | 44444      | 5555                    |                70 |                35 |               25 |              50 |               5 |
+| 116 | DVD drive          | 77777      | 6666                    |               110 |                55 |               40 |              70 |              20 |
+| 117 | CD drive           | 1234       | 5678                    |               150 |                75 |               60 |             165 |              35 |
+| 118 | Printer            | 5678       | 9876                    |                80 |                40 |               20 |             100 |              10 |
+| 119 | Mouse              | 9876       | 4321                    |               120 |                60 |               80 |             100 |              15 |
+| 120 | HP Laptop          | 5555       | 1111                    |               100 |                50 |               30 |             120 |              25 |
+| 121 | Vivo               | 2222       | 3333                    |                80 |                40 |               50 |              70 |              15 |
+| 122 | Sony               | 7777       | 4444                    |                60 |                30 |               20 |              70 |              10 |
+| 123 | LG                 | 8888       | 9999                    |               120 |                60 |               70 |             110 |              25 |
+| 124 | Nokia              | 1111       | 2222                    |                90 |                45 |               40 |              95 |              20 |
+| 125 | TATA               | 5555       | 6666                    |                70 |                35 |               50 |              55 |              15 |
+| 126 | Lenovo             | 3333       | 4444                    |               110 |                55 |               60 |             105 |              30 |
+| 127 | Honda              | 8888       | 7777                    |                80 |                40 |               45 |              75 |              10 |
+| 128 | Bajaj              | 1111       | 9999                    |               130 |                65 |               70 |             125 |              25 |
+| 129 | Mercedes Benz      | 7777       | 8888                    |                90 |                45 |               50 |              85 |              20 |
+| 130 | Range Rover        | 4444       | 5555                    |               120 |                60 |               70 |             110 |              30 |
+| 131 | Rolex              | 3333       | 2222                    |                60 |                30 |               40 |              50 |              10 |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+31 rows in set (0.00 sec)
+
+mysql> INSERT INTO products VALUES
+    -> (132,"Gucci",5555,6666,110,55,70,95,20),
+    -> (133,"American Express"7777,8888,80,40,50,70,15),
+    -> (134,"Oppo",2222,1111,130,65,80,115,25),
+    -> (135,"JIO",8888,7777,90,45,40,95,15),
+    -> (136,"Real me",5555,4444,120,60,55,125,30),
+    -> (137,"Redmi",6666,3333,70,35,30,75,10),
+    -> (138,"Ford",1111,2222,100,50,40,110,20),
+    -> (139,"Maruti Suzuki",5555,6666,80,40,30,90,15),
+    -> (140,"BMW",7777,8888,130,65,70,125,25),
+    -> (141,"Nissan",8888,7777,115,25,45,90,58),
+    -> (142,"Mahindra",12345,54321,150,75,70,155,35),
+    -> (143,"ONE Plus",54321,12345,80,40,20,100,10),
+    -> (144,"Jaguar",78655,2541,85,55,15,200,13),
+    -> (145,"Nike",98765,43210,200,100,60,140,40),
+    -> (146,"Adidas",11111,22222,90,45,30,85,20),
+    -> (147,"Armani",77777,66666,70,35,50,55,15),
+    -> (148,"Safari",55555,44444,110,55,40,95,25),
+    -> (149,"Godrej",33333,22222,80,40,30,90,15),
+    -> (150,"Microsoft",44444,55555,120,60,40,140,30),
+    -> (151,"Toyota",66666,77777,100,50,60,90,25),
+    -> (152,"Starbuks",11111,22222,110,55,40,125,25),
+    -> (153,"Nestle",77777,66666,80,40,35,85,20),
+    -> (154,"Cisco",55555,44444,130,65,50,145,30),
+    -> (155,"Adobe",10000,30000,145,25,45,155,29),
+    -> (156,"ZARA",33333,22222,100,50,40,110,25),
+    -> (157,"Unique",44444,55555,70,35,20,90,15),
+    -> (158,"Orcle",66666,77777,120,60,70,110,30),
+    -> (159,"Hyundai",88888,99999,90,45,30,75,10),
+    -> (160,"Intel",12345,54321,60,30,25,65,15);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '7777,8888,80,40,50,70,15),
+(134,"Oppo",2222,1111,130,65,80,115,25),
+(135,"JIO",8' at line 3
+mysql> INSERT INTO products VALUES
+    -> (132,"Gucci",5555,6666,110,55,70,95,20),
+    -> (133,"American Express",7777,8888,80,40,50,70,15),
+    -> (134,"Oppo",2222,1111,130,65,80,115,25),
+    -> (135,"JIO",8888,7777,90,45,40,95,15),
+    -> (136,"Real me",5555,4444,120,60,55,125,30),
+    -> (137,"Redmi",6666,3333,70,35,30,75,10),
+    -> (138,"Ford",1111,2222,100,50,40,110,20),
+    -> (139,"Maruti Suzuki",5555,6666,80,40,30,90,15),
+    -> (140,"BMW",7777,8888,130,65,70,125,25),
+    -> (141,"Nissan",8888,7777,115,25,45,90,58),
+    -> (142,"Mahindra",12345,54321,150,75,70,155,35),
+    ->
+    -> (143,"ONE Plus",54321,12345,80,40,20,100,10),
+    -> (144,"Jaguar",78655,2541,85,55,15,200,13),
+    -> (145,"Nike",98765,43210,200,100,60,140,40),
+    -> (146,"Adidas",11111,22222,90,45,30,85,20),
+    -> (147,"Armani",77777,66666,70,35,50,55,15),
+    -> (148,"Safari",55555,44444,110,55,40,95,25),
+    -> (149,"Godrej",33333,22222,80,40,30,90,15),
+    -> (150,"Microsoft",44444,55555,120,60,40,140,30),
+    -> (151,"Toyota",66666,77777,100,50,60,90,25),
+    -> (152,"Starbuks",11111,22222,110,55,40,125,25),
+    -> (153,"Nestle",77777,66666,80,40,35,85,20),
+    -> (154,"Cisco",55555,44444,130,65,50,145,30),
+    -> (155,"Adobe",10000,30000,145,25,45,155,29),
+    -> (156,"ZARA",33333,22222,100,50,40,110,25),
+    -> (157,"Unique",44444,55555,70,35,20,90,15),
+    -> (158,"Orcle",66666,77777,120,60,70,110,30),
+    -> (159,"Hyundai",88888,99999,90,45,30,75,10),
+    -> (160,"Intel",12345,54321,60,30,25,65,15);
+Query OK, 29 rows affected (0.00 sec)
+Records: 29  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO products VALUES
+    -> (161,"Nescafe",54321,12345,110,55,40,120,25),
+    -> (162,"Disnep",98765,43210,70,35,25,45,5),
+    -> (163,"Gillete",54321,12345,120,60,70,110,25),
+    -> (164,"Audi",88888,99999,80,40,30,70,20),
+    -> (165,"Philips",78945,45632,90,30,40,75,25),
+    -> (166,"Syska",11111,22222,90,45,30,85,20),
+    -> (167,"Barclays",77777,66666,70,35,50,55,15),
+    -> (168,"Canon",55555,44444,110,55,40,95,25),
+    -> (169,"Dove",99999,33333,125,53,39,100,35),
+    -> (170,"Micromax",33333,22222,80,40,30,90,15),
+    -> (171,"Lava",44444,55555,120,60,40,140,30),
+    -> (172,"JEEP",66666,77777,100,50,60,90,25),
+    -> (173,"Black BerrY",88888,99999,90,45,30,75,10),
+    -> (174,"BOSCH",12345,54321,60,30,25,65,15),
+    -> (175,"Gionee",54321,12345,110,55,40,120,25);
+Query OK, 15 rows affected (0.01 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql>  SELECT * FROM products;
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| id  | productname        | partnumber | productlabel            | startinginventory | inventoryreceived | inventoryshipped | inventoryonhand | minimumrequired |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| 101 | Dell Server        | XP 2000    | Dell Server XP 2000     |            100007 |                35 |               25 |          100017 |              15 |
+| 102 | Google Chromebooks | 1          | Google Chromebooks- 1.0 |               100 |                75 |              654 |            -479 |              20 |
+| 103 | Cisco Router       | 10         | Cisco Router- 10X       |                45 |               143 |               76 |              86 |              88 |
+| 104 | Apple              | 25         | Apple 2000              |              2002 |                71 |               81 |             114 |              16 |
+| 105 | Samsung            | 25         | Samsung 10000           |              2022 |                51 |              851 |              11 |              12 |
+| 106 | IBall              | 112        | IBall 1001              |              2001 |               100 |              350 |             225 |              70 |
+| 107 | Epsion             | 120        | Epsion 1002             |              2003 |                90 |              250 |             119 |              80 |
+| 108 | Zebronics          | 145        | Zebronics 1003          |              2004 |               110 |              365 |             111 |              10 |
+| 109 | Asus               | 54321      | 8765                    |               150 |                75 |               45 |             105 |              30 |
+| 110 | Frontech           | 98765      | 4321                    |               200 |               100 |               60 |             140 |              40 |
+| 111 | Motherboard        | 13579      | 2468                    |                80 |                40 |               20 |              60 |              15 |
+| 112 | Keyboard           | 24680      | 3579                    |               120 |                60 |               30 |              90 |              25 |
+| 113 | Zipdrive           | 11111      | 2222                    |                50 |                25 |               15 |              40 |              10 |
+| 114 | Speaker            | 88888      | 9999                    |                90 |                45 |               30 |              75 |              10 |
+| 115 | Monitor            | 44444      | 5555                    |                70 |                35 |               25 |              50 |               5 |
+| 116 | DVD drive          | 77777      | 6666                    |               110 |                55 |               40 |              70 |              20 |
+| 117 | CD drive           | 1234       | 5678                    |               150 |                75 |               60 |             165 |              35 |
+| 118 | Printer            | 5678       | 9876                    |                80 |                40 |               20 |             100 |              10 |
+| 119 | Mouse              | 9876       | 4321                    |               120 |                60 |               80 |             100 |              15 |
+| 120 | HP Laptop          | 5555       | 1111                    |               100 |                50 |               30 |             120 |              25 |
+| 121 | Vivo               | 2222       | 3333                    |                80 |                40 |               50 |              70 |              15 |
+| 122 | Sony               | 7777       | 4444                    |                60 |                30 |               20 |              70 |              10 |
+| 123 | LG                 | 8888       | 9999                    |               120 |                60 |               70 |             110 |              25 |
+| 124 | Nokia              | 1111       | 2222                    |                90 |                45 |               40 |              95 |              20 |
+| 125 | TATA               | 5555       | 6666                    |                70 |                35 |               50 |              55 |              15 |
+| 126 | Lenovo             | 3333       | 4444                    |               110 |                55 |               60 |             105 |              30 |
+| 127 | Honda              | 8888       | 7777                    |                80 |                40 |               45 |              75 |              10 |
+| 128 | Bajaj              | 1111       | 9999                    |               130 |                65 |               70 |             125 |              25 |
+| 129 | Mercedes Benz      | 7777       | 8888                    |                90 |                45 |               50 |              85 |              20 |
+| 130 | Range Rover        | 4444       | 5555                    |               120 |                60 |               70 |             110 |              30 |
+| 131 | Rolex              | 3333       | 2222                    |                60 |                30 |               40 |              50 |              10 |
+| 132 | Gucci              | 5555       | 6666                    |               110 |                55 |               70 |              95 |              20 |
+| 133 | American Express   | 7777       | 8888                    |                80 |                40 |               50 |              70 |              15 |
+| 134 | Oppo               | 2222       | 1111                    |               130 |                65 |               80 |             115 |              25 |
+| 135 | JIO                | 8888       | 7777                    |                90 |                45 |               40 |              95 |              15 |
+| 136 | Real me            | 5555       | 4444                    |               120 |                60 |               55 |             125 |              30 |
+| 137 | Redmi              | 6666       | 3333                    |                70 |                35 |               30 |              75 |              10 |
+| 138 | Ford               | 1111       | 2222                    |               100 |                50 |               40 |             110 |              20 |
+| 139 | Maruti Suzuki      | 5555       | 6666                    |                80 |                40 |               30 |              90 |              15 |
+| 140 | BMW                | 7777       | 8888                    |               130 |                65 |               70 |             125 |              25 |
+| 141 | Nissan             | 8888       | 7777                    |               115 |                25 |               45 |              90 |              58 |
+| 142 | Mahindra           | 12345      | 54321                   |               150 |                75 |               70 |             155 |              35 |
+| 143 | ONE Plus           | 54321      | 12345                   |                80 |                40 |               20 |             100 |              10 |
+| 144 | Jaguar             | 78655      | 2541                    |                85 |                55 |               15 |             200 |              13 |
+| 145 | Nike               | 98765      | 43210                   |               200 |               100 |               60 |             140 |              40 |
+| 146 | Adidas             | 11111      | 22222                   |                90 |                45 |               30 |              85 |              20 |
+| 147 | Armani             | 77777      | 66666                   |                70 |                35 |               50 |              55 |              15 |
+| 148 | Safari             | 55555      | 44444                   |               110 |                55 |               40 |              95 |              25 |
+| 149 | Godrej             | 33333      | 22222                   |                80 |                40 |               30 |              90 |              15 |
+| 150 | Microsoft          | 44444      | 55555                   |               120 |                60 |               40 |             140 |              30 |
+| 151 | Toyota             | 66666      | 77777                   |               100 |                50 |               60 |              90 |              25 |
+| 152 | Starbuks           | 11111      | 22222                   |               110 |                55 |               40 |             125 |              25 |
+| 153 | Nestle             | 77777      | 66666                   |                80 |                40 |               35 |              85 |              20 |
+| 154 | Cisco              | 55555      | 44444                   |               130 |                65 |               50 |             145 |              30 |
+| 155 | Adobe              | 10000      | 30000                   |               145 |                25 |               45 |             155 |              29 |
+| 156 | ZARA               | 33333      | 22222                   |               100 |                50 |               40 |             110 |              25 |
+| 157 | Unique             | 44444      | 55555                   |                70 |                35 |               20 |              90 |              15 |
+| 158 | Orcle              | 66666      | 77777                   |               120 |                60 |               70 |             110 |              30 |
+| 159 | Hyundai            | 88888      | 99999                   |                90 |                45 |               30 |              75 |              10 |
+| 160 | Intel              | 12345      | 54321                   |                60 |                30 |               25 |              65 |              15 |
+| 161 | Nescafe            | 54321      | 12345                   |               110 |                55 |               40 |             120 |              25 |
+| 162 | Disnep             | 98765      | 43210                   |                70 |                35 |               25 |              45 |               5 |
+| 163 | Gillete            | 54321      | 12345 
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| itv_andheri        |
+| itv_borivali       |
+| itv_thane          |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> USE itv_andheri;
+Database changed
+mysql> SHOW TABLES;
++-----------------------+
+| Tables_in_itv_andheri |
++-----------------------+
+| course                |
+| customer              |
+| demo_table            |
+| employee              |
+| employee_info         |
+| employee_view         |
+| itv_student           |
+| labour_salary         |
+| orders                |
+| person                |
+| products              |
+| purchases             |
+| sales_tbl             |
+| student               |
+| suppliers             |
+| temp_emp              |
+| temp_employee         |
+| worker                |
++-----------------------+
+18 rows in set (0.00 sec)
+
+mysql> SELECT * FROM suppliers;
++----+----------------+
+| id | suppliers      |
++----+----------------+
+|  1 | ShockWave Tech |
+|  2 | CDW            |
+|  3 | Acme Tech      |
+|  4 | CloudTail      |
+|  5 | Alpha Selter   |
++----+----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM products;
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| id  | productname        | partnumber | productlabel            | startinginventory | inventoryreceived | inventoryshipped | inventoryonhand | minimumrequired |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+| 101 | Dell Server        | XP 2000    | Dell Server XP 2000     |            100007 |                35 |               25 |          100017 |              15 |
+| 102 | Google Chromebooks | 1          | Google Chromebooks- 1.0 |               100 |                75 |              654 |            -479 |              20 |
+| 103 | Cisco Router       | 10         | Cisco Router- 10X       |                45 |               143 |               76 |              86 |              88 |
+| 104 | Apple              | 25         | Apple 2000              |              2002 |                71 |               81 |             114 |              16 |
+| 105 | Samsung            | 25         | Samsung 10000           |              2022 |                51 |              851 |              11 |              12 |
+| 106 | IBall              | 112        | IBall 1001              |              2001 |               100 |              350 |             225 |              70 |
+| 107 | Epsion             | 120        | Epsion 1002             |              2003 |                90 |              250 |             119 |              80 |
+| 108 | Zebronics          | 145        | Zebronics 1003          |              2004 |               110 |              365 |             111 |              10 |
+| 109 | Asus               | 54321      | 8765                    |               150 |                75 |               45 |             105 |              30 |
+| 110 | Frontech           | 98765      | 4321                    |               200 |               100 |               60 |             140 |              40 |
+| 111 | Motherboard        | 13579      | 2468                    |                80 |                40 |               20 |              60 |              15 |
+| 112 | Keyboard           | 24680      | 3579                    |               120 |                60 |               30 |              90 |              25 |
+| 113 | Zipdrive           | 11111      | 2222                    |                50 |                25 |               15 |              40 |              10 |
+| 114 | Speaker            | 88888      | 9999                    |                90 |                45 |               30 |              75 |              10 |
+| 115 | Monitor            | 44444      | 5555                    |                70 |                35 |               25 |              50 |               5 |
+| 116 | DVD drive          | 77777      | 6666                    |               110 |                55 |               40 |              70 |              20 |
+| 117 | CD drive           | 1234       | 5678                    |               150 |                75 |               60 |             165 |              35 |
+| 118 | Printer            | 5678       | 9876                    |                80 |                40 |               20 |             100 |              10 |
+| 119 | Mouse              | 9876       | 4321                    |               120 |                60 |               80 |             100 |              15 |
+| 120 | HP Laptop          | 5555       | 1111                    |               100 |                50 |               30 |             120 |              25 |
+| 121 | Vivo               | 2222       | 3333                    |                80 |                40 |               50 |              70 |              15 |
+| 122 | Sony               | 7777       | 4444                    |                60 |                30 |               20 |              70 |              10 |
+| 123 | LG                 | 8888       | 9999                    |               120 |                60 |               70 |             110 |              25 |
+| 124 | Nokia              | 1111       | 2222                    |                90 |                45 |               40 |              95 |              20 |
+| 125 | TATA               | 5555       | 6666                    |                70 |                35 |               50 |              55 |              15 |
+| 126 | Lenovo             | 3333       | 4444                    |               110 |                55 |               60 |             105 |              30 |
+| 127 | Honda              | 8888       | 7777                    |                80 |                40 |               45 |              75 |              10 |
+| 128 | Bajaj              | 1111       | 9999                    |               130 |                65 |               70 |             125 |              25 |
+| 129 | Mercedes Benz      | 7777       | 8888                    |                90 |                45 |               50 |              85 |              20 |
+| 130 | Range Rover        | 4444       | 5555                    |               120 |                60 |               70 |             110 |              30 |
+| 131 | Rolex              | 3333       | 2222                    |                60 |                30 |               40 |              50 |              10 |
+| 132 | Gucci              | 5555       | 6666                    |               110 |                55 |               70 |              95 |              20 |
+| 133 | American Express   | 7777       | 8888                    |                80 |                40 |               50 |              70 |              15 |
+| 134 | Oppo               | 2222       | 1111                    |               130 |                65 |               80 |             115 |              25 |
+| 135 | JIO                | 8888       | 7777                    |                90 |                45 |               40 |              95 |              15 |
+| 136 | Real me            | 5555       | 4444                    |               120 |                60 |               55 |             125 |              30 |
+| 137 | Redmi              | 6666       | 3333                    |                70 |                35 |               30 |              75 |              10 |
+| 138 | Ford               | 1111       | 2222                    |               100 |                50 |               40 |             110 |              20 |
+| 139 | Maruti Suzuki      | 5555       | 6666                    |                80 |                40 |               30 |              90 |              15 |
+| 140 | BMW                | 7777       | 8888                    |               130 |                65 |               70 |             125 |              25 |
+| 141 | Nissan             | 8888       | 7777                    |               115 |                25 |               45 |              90 |              58 |
+| 142 | Mahindra           | 12345      | 54321                   |               150 |                75 |               70 |             155 |              35 |
+| 143 | ONE Plus           | 54321      | 12345                   |                80 |                40 |               20 |             100 |              10 |
+| 144 | Jaguar             | 78655      | 2541                    |                85 |                55 |               15 |             200 |              13 |
+| 145 | Nike               | 98765      | 43210                   |               200 |               100 |               60 |             140 |              40 |
+| 146 | Adidas             | 11111      | 22222                   |                90 |                45 |               30 |              85 |              20 |
+| 147 | Armani             | 77777      | 66666                   |                70 |                35 |               50 |              55 |              15 |
+| 148 | Safari             | 55555      | 44444                   |               110 |                55 |               40 |              95 |              25 |
+| 149 | Godrej             | 33333      | 22222                   |                80 |                40 |               30 |              90 |              15 |
+| 150 | Microsoft          | 44444      | 55555                   |               120 |                60 |               40 |             140 |              30 |
+| 151 | Toyota             | 66666      | 77777                   |               100 |                50 |               60 |              90 |              25 |
+| 152 | Starbuks           | 11111      | 22222                   |               110 |                55 |               40 |             125 |              25 |
+| 153 | Nestle             | 77777      | 66666                   |                80 |                40 |               35 |              85 |              20 |
+| 154 | Cisco              | 55555      | 44444                   |               130 |                65 |               50 |             145 |              30 |
+| 155 | Adobe              | 10000      | 30000                   |               145 |                25 |               45 |             155 |              29 |
+| 156 | ZARA               | 33333      | 22222                   |               100 |                50 |               40 |             110 |              25 |
+| 157 | Unique             | 44444      | 55555                   |                70 |                35 |               20 |              90 |              15 |
+| 158 | Orcle              | 66666      | 77777                   |               120 |                60 |               70 |             110 |              30 |
+| 159 | Hyundai            | 88888      | 99999                   |                90 |                45 |               30 |              75 |              10 |
+| 160 | Intel              | 12345      | 54321                   |                60 |                30 |               25 |              65 |              15 |
+| 161 | Nescafe            | 54321      | 12345                   |               110 |                55 |               40 |             120 |              25 |
+| 162 | Disnep             | 98765      | 43210                   |                70 |                35 |               25 |              45 |               5 |
+| 163 | Gillete            | 54321      | 12345                   |               120 |                60 |               70 |             110 |              25 |
+| 164 | Audi               | 88888      | 99999                   |                80 |                40 |               30 |              70 |              20 |
+| 165 | Philips            | 78945      | 45632                   |                90 |                30 |               40 |              75 |              25 |
+| 166 | Syska              | 11111      | 22222                   |                90 |                45 |               30 |              85 |              20 |
+| 167 | Barclays           | 77777      | 66666                   |                70 |                35 |               50 |              55 |              15 |
+| 168 | Canon              | 55555      | 44444                   |               110 |                55 |               40 |              95 |              25 |
+| 169 | Dove               | 99999      | 33333                   |               125 |                53 |               39 |             100 |              35 |
+| 170 | Micromax           | 33333      | 22222                   |                80 |                40 |               30 |              90 |              15 |
+| 171 | Lava               | 44444      | 55555                   |               120 |                60 |               40 |             140 |              30 |
+| 172 | JEEP               | 66666      | 77777                   |               100 |                50 |               60 |              90 |              25 |
+| 173 | Black BerrY        | 88888      | 99999                   |                90 |                45 |               30 |              75 |              10 |
+| 174 | BOSCH              | 12345      | 54321                   |                60 |                30 |               25 |              65 |              15 |
+| 175 | Gionee             | 54321      | 12345                   |               110 |                55 |               40 |             120 |              25 |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+75 rows in set (0.00 sec)
+
+mysql> SELECT * FROM orders;
++----+-----------+-------------+-----------+---------------+------------+
+| id | first     | last        | productld | numbershipped | orderdate  |
++----+-----------+-------------+-----------+---------------+------------+
+|  1 | Jhon      | Doe         | 123       |             5 | 2023-11-05 |
+|  2 | Jane      | Smith       | 456       |             3 | 2023-11-06 |
+|  3 | Mike      | Jhonson     | 789       |             8 | 2023-11-07 |
+|  4 | Alice     | Brown       | 101       |             2 | 2023-11-08 |
+|  5 | David     | Lee         | 222       |             6 | 2023-11-09 |
+|  6 | Sarah     | Wilson      | 333       |             4 | 2023-11-10 |
+|  7 | Michael   | Smith       | 777       |             7 | 2023-11-11 |
+|  8 | Emma      | Davis       | 555       |             9 | 2023-11-12 |
+|  9 | William   | Jones       | 888       |             1 | 2023-11-13 |
+| 10 | Olivia    | Gracia      | 444       |             4 | 2023-11-14 |
+| 11 | Noah      | Martinez    | 666       |             6 | 2023-11-15 |
+| 12 | Sophia    | Lopez       | 111       |             3 | 2023-11-16 |
+| 13 | Elijah    | Wright      | 333       |             7 | 2023-11-17 |
+| 14 | Ava       | Parez       | 999       |            10 | 2023-11-18 |
+| 15 | James     | Turner      | 123       |             5 | 2023-11-19 |
+| 16 | Mia       | Gonzalez    | 777       |             2 | 2023-11-20 |
+| 17 | James     | Smith       | 775       |             8 | 0202-11-21 |
+| 18 | Michael   | Smith       | 124       |             5 | 2023-11-22 |
+| 19 | Robert    | Smith       | 125       |            10 | 2023-11-23 |
+| 20 | Maria     | Garcia      | 126       |             9 | 2023-11-24 |
+| 21 | David     | Smith       | 127       |             5 | 2023-11-25 |
+| 22 | Steven    | King        | 128       |             4 | 2023-11-26 |
+| 23 | Neena     | Kochhar     | 129       |             8 | 2023-11-27 |
+| 24 | Lex       | De Haan     | 130       |            12 | 2023-11-28 |
+| 25 | Alexander | Hunold      | 131       |            10 | 2023-11-29 |
+| 26 | Bruce     | Ernst       | 132       |            15 | 2023-10-07 |
+| 27 | David     | Austin      | 133       |             8 | 2023-10-12 |
+| 28 | Valli     | Pataballa   | 134       |             6 | 2023-10-20 |
+| 29 | Diana     | Lorentz     | 135       |             2 | 2023-09-05 |
+| 30 | Nancy     | Greenberg   | 136       |             3 | 2023-09-11 |
+| 31 | Daniel    | Faviet      | 137       |             1 | 2023-09-25 |
+| 32 | john      | Chen        | 138       |             2 | 2023-12-08 |
+| 33 | Ismael    | Sciarra     | 139       |             3 | 2023-12-10 |
+| 34 | Luis      | Popp        | 140       |             5 | 2023-12-12 |
+| 35 | Den       | Raphaely    | 141       |            11 | 2023-12-14 |
+| 36 | Alexander | Khoo        | 142       |            10 | 2023-12-16 |
+| 37 | Shelli    | Baida       | 143       |             9 | 2023-12-18 |
+| 38 | Sigal     | Tobias      | 144       |             8 | 2023-12-20 |
+| 39 | Guy       | Himuro      | 145       |             7 | 2023-12-22 |
+| 40 | Karen     | Colmenares  | 146       |             6 | 2023-12-24 |
+| 41 | Matthew   | Weiss       | 147       |             5 | 2022-12-08 |
+| 42 | Adam      | Fripp       | 148       |             4 | 2022-12-12 |
+| 43 | Payam     | Kaufling    | 149       |             3 | 2022-12-20 |
+| 44 | Shanta    | Vollman     | 150       |             2 | 2022-12-25 |
+| 45 | Kevin     | Mourgos     | 151       |             5 | 2022-11-06 |
+| 46 | Julia     | Nayer       | 152       |             6 | 2022-11-10 |
+| 47 | Irene     | Mikkilineni | 200       |             5 | 2022-11-15 |
+| 48 | James     | Landry      | 201       |            11 | 2022-11-20 |
+| 49 | Steven    | Markle      | 222       |            12 | 2022-11-25 |
+| 50 | Laura     | Bissot      | 293       |            16 | 2022-09-05 |
++----+-----------+-------------+-----------+---------------+------------+
+50 rows in set (0.00 sec)
+
+mysql> SELECT * FROM purchases;
++----+------------+-----------+----------------+--------------+
+| id | supplierld | productld | numberreceived | purchasedate |
++----+------------+-----------+----------------+--------------+
+| 90 | 1001       | Pen       |             10 | 2023-11-06   |
+| 91 | 1001       | Diesel    |             11 | 2023-11-07   |
+| 92 | 1002       | Samsung   |              9 | 2023-11-10   |
+| 93 | 1003       | Sony      |              8 | 2023-11-12   |
+| 94 | 1004       | Nokia     |              7 | 2023-11-16   |
+| 95 | 1005       | Honda     |              6 | 2023-11-20   |
+| 96 | 1006       | Bajaj     |              5 | 2023-12-05   |
+| 97 | 1007       | Dell      |              4 | 2023-12-10   |
+| 98 | 1008       | Tata      |              3 | 2023-12-15   |
+| 99 | 1009       | HP        |              2 | 2023-10-09   |
++----+------------+-----------+----------------+--------------+
+10 rows in set (0.00 sec)
+                  |               120 |                60 |               70 |             110 |              25 |
+| 164 | Audi               | 88888      | 99999                   |                80 |                40 |               30 |              70 |              20 |
+| 165 | Philips            | 78945      | 45632                   |                90 |                30 |               40 |              75 |              25 |
+| 166 | Syska              | 11111      | 22222                   |                90 |                45 |               30 |              85 |              20 |
+| 167 | Barclays           | 77777      | 66666                   |                70 |                35 |               50 |              55 |              15 |
+| 168 | Canon              | 55555      | 44444                   |               110 |                55 |               40 |              95 |              25 |
+| 169 | Dove               | 99999      | 33333                   |               125 |                53 |               39 |             100 |              35 |
+| 170 | Micromax           | 33333      | 22222                   |                80 |                40 |               30 |              90 |              15 |
+| 171 | Lava               | 44444      | 55555                   |               120 |                60 |               40 |             140 |              30 |
+| 172 | JEEP               | 66666      | 77777                   |               100 |                50 |               60 |              90 |              25 |
+| 173 | Black BerrY        | 88888      | 99999                   |                90 |                45 |               30 |              75 |              10 |
+| 174 | BOSCH              | 12345      | 54321                   |                60 |                30 |               25 |              65 |              15 |
+| 175 | Gionee             | 54321      | 12345                   |               110 |                55 |               40 |             120 |              25 |
++-----+--------------------+------------+-------------------------+-------------------+-------------------+------------------+-----------------+-----------------+
+75 rows in set (0.00 sec)
+
+mysql>
+
+
+
+LEFT JOIN orders
+    -> ON(products.productlabel = orders.productlabel)
+    -> GROUP BY productname
+    -> ORDER BY Totalorders DESC;
+ERROR 1054 (42S22): Unknown column 'orders.productlabel' in 'on clause'
+mysql> SELECT productname,COUNT(productld) AS Totalorders
+    -> FROM products
+    -> LEFT JOIN orders
+    -> ON products.productld = orders.productld
+    -> GROUP BY productname
+    -> ORDER BY Totalorders DESC;
+ERROR 1054 (42S22): Unknown column 'products.productld' in 'on clause'
+mysql> SELECT productname,COUNT(productld) AS Totalorders
+    -> FROM products
+    -> LEFT JOIN orders
+    -> ON(products.productlabel = orders.productld)
+    -> GROUP BY productname
+    -> ORDER BY Totalorders DESC;
++--------------------+-------------+
+| productname        | Totalorders |
++--------------------+-------------+
+| Dell Server        |           0 |
+| Google Chromebooks |           0 |
+| Cisco Router       |           0 |
+| Apple              |           0 |
+| Samsung            |           0 |
+| IBall              |           0 |
+| Epsion             |           0 |
+| Zebronics          |           0 |
+| Asus               |           0 |
+| Frontech           |           0 |
+| Motherboard        |           0 |
+| Keyboard           |           0 |
+| Zipdrive           |           0 |
+| Speaker            |           0 |
+| Monitor            |           0 |
+| DVD drive          |           0 |
+| CD drive           |           0 |
+| Printer            |           0 |
+| Mouse              |           0 |
+| HP Laptop          |           0 |
+| Vivo               |           0 |
+| Sony               |           0 |
+| LG                 |           0 |
+| Nokia              |           0 |
+| TATA               |           0 |
+| Lenovo             |           0 |
+| Honda              |           0 |
+| Bajaj              |           0 |
+| Mercedes Benz      |           0 |
+| Range Rover        |           0 |
+| Rolex              |           0 |
+| Gucci              |           0 |
+| American Express   |           0 |
+| Oppo               |           0 |
+| JIO                |           0 |
+| Real me            |           0 |
+| Redmi              |           0 |
+| Ford               |           0 |
+| Maruti Suzuki      |           0 |
+| BMW                |           0 |
+| Nissan             |           0 |
+| Mahindra           |           0 |
+| ONE Plus           |           0 |
+| Jaguar             |           0 |
+| Nike               |           0 |
+| Adidas             |           0 |
+| Armani             |           0 |
+| Safari             |           0 |
+| Godrej             |           0 |
+| Microsoft          |           0 |
+| Toyota             |           0 |
+| Starbuks           |           0 |
+| Nestle             |           0 |
+| Cisco              |           0 |
+| Adobe              |           0 |
+| ZARA               |           0 |
+| Unique             |           0 |
+| Orcle              |           0 |
+| Hyundai            |           0 |
+| Intel              |           0 |
+| Nescafe            |           0 |
+| Disnep             |           0 |
+| Gillete            |           0 |
+| Audi               |           0 |
+| Philips            |           0 |
+| Syska              |           0 |
+| Barclays           |           0 |
+| Canon              |           0 |
+| Dove               |           0 |
+| Micromax           |           0 |
+| Lava               |           0 |
+| JEEP               |           0 |
+| Black BerrY        |           0 |
+| BOSCH              |           0 |
+| Gionee             |           0 |
++--------------------+-------------+
+75 rows in set (0.00 sec)
+
+mysql> SELECT productname,minimumrequired
+    -> FROM products
+    -> ORDER BY minimumrequired DESC;
++--------------------+-----------------+
+| productname        | minimumrequired |
++--------------------+-----------------+
+| Cisco Router       |              88 |
+| Epsion             |              80 |
+| IBall              |              70 |
+| Nissan             |              58 |
+| Frontech           |              40 |
+| Nike               |              40 |
+| Dove               |              35 |
+| Mahindra           |              35 |
+| CD drive           |              35 |
+| Lava               |              30 |
+| Range Rover        |              30 |
+| Asus               |              30 |
+| Real me            |              30 |
+| Lenovo             |              30 |
+| Orcle              |              30 |
+| Microsoft          |              30 |
+| Cisco              |              30 |
+| Adobe              |              29 |
+| Oppo               |              25 |
+| HP Laptop          |              25 |
+| Starbuks           |              25 |
+| Toyota             |              25 |
+| LG                 |              25 |
+| ZARA               |              25 |
+| Gionee             |              25 |
+| Keyboard           |              25 |
+| Safari             |              25 |
+| Bajaj              |              25 |
+| Nescafe            |              25 |
+| Gillete            |              25 |
+| Philips            |              25 |
+| Canon              |              25 |
+| BMW                |              25 |
+| JEEP               |              25 |
+| Nokia              |              20 |
+| Mercedes Benz      |              20 |
+| Gucci              |              20 |
+| Syska              |              20 |
+| Adidas             |              20 |
+| Nestle             |              20 |
+| Audi               |              20 |
+| Google Chromebooks |              20 |
+| Ford               |              20 |
+| DVD drive          |              20 |
+| Apple              |              16 |
+| Maruti Suzuki      |              15 |
+| Armani             |              15 |
+| Godrej             |              15 |
+| TATA               |              15 |
+| Vivo               |              15 |
+| Mouse              |              15 |
+| Intel              |              15 |
+| Motherboard        |              15 |
+| JIO                |              15 |
+| Dell Server        |              15 |
+| Barclays           |              15 |
+| American Express   |              15 |
+| Micromax           |              15 |
+| BOSCH              |              15 |
+| Unique             |              15 |
+| Jaguar             |              13 |
+| Samsung            |              12 |
+| Rolex              |              10 |
+| Honda              |              10 |
+| Sony               |              10 |
+| Redmi              |              10 |
+| Printer            |              10 |
+| Speaker            |              10 |
+| Zipdrive           |              10 |
+| Hyundai            |              10 |
+| Zebronics          |              10 |
+| ONE Plus           |              10 |
+| Black BerrY        |              10 |
+| Monitor            |               5 |
+| Disnep             |               5 |
++--------------------+-----------------+
+75 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*) AS totalpurchases
+    -> FROM purchases
+    -> WHERE purchasedate>="2023-10-10" AND purchasedate<="2023-12-28";
++----------------+
+| totalpurchases |
++----------------+
+|              9 |
++----------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) AS totalorders
+    -> FROM orders
+    -> WHERE orderdate>="2023-10-12" AND orderdate<="2023-12-28";
++-------------+
+| totalorders |
++-------------+
+|          35 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM orders;
++----+-----------+-------------+-----------+---------------+------------+
+| id | first     | last        | productld | numbershipped | orderdate  |
++----+-----------+-------------+-----------+---------------+------------+
+|  1 | Jhon      | Doe         | 123       |             5 | 2023-11-05 |
+|  2 | Jane      | Smith       | 456       |             3 | 2023-11-06 |
+|  3 | Mike      | Jhonson     | 789       |             8 | 2023-11-07 |
+|  4 | Alice     | Brown       | 101       |             2 | 2023-11-08 |
+|  5 | David     | Lee         | 222       |             6 | 2023-11-09 |
+|  6 | Sarah     | Wilson      | 333       |             4 | 2023-11-10 |
+|  7 | Michael   | Smith       | 777       |             7 | 2023-11-11 |
+|  8 | Emma      | Davis       | 555       |             9 | 2023-11-12 |
+|  9 | William   | Jones       | 888       |             1 | 2023-11-13 |
+| 10 | Olivia    | Gracia      | 444       |             4 | 2023-11-14 |
+| 11 | Noah      | Martinez    | 666       |             6 | 2023-11-15 |
+| 12 | Sophia    | Lopez       | 111       |             3 | 2023-11-16 |
+| 13 | Elijah    | Wright      | 333       |             7 | 2023-11-17 |
+| 14 | Ava       | Parez       | 999       |            10 | 2023-11-18 |
+| 15 | James     | Turner      | 123       |             5 | 2023-11-19 |
+| 16 | Mia       | Gonzalez    | 777       |             2 | 2023-11-20 |
+| 17 | James     | Smith       | 775       |             8 | 0202-11-21 |
+| 18 | Michael   | Smith       | 124       |             5 | 2023-11-22 |
+| 19 | Robert    | Smith       | 125       |            10 | 2023-11-23 |
+| 20 | Maria     | Garcia      | 126       |             9 | 2023-11-24 |
+| 21 | David     | Smith       | 127       |             5 | 2023-11-25 |
+| 22 | Steven    | King        | 128       |             4 | 2023-11-26 |
+| 23 | Neena     | Kochhar     | 129       |             8 | 2023-11-27 |
+| 24 | Lex       | De Haan     | 130       |            12 | 2023-11-28 |
+| 25 | Alexander | Hunold      | 131       |            10 | 2023-11-29 |
+| 26 | Bruce     | Ernst       | 132       |            15 | 2023-10-07 |
+| 27 | David     | Austin      | 133       |             8 | 2023-10-12 |
+| 28 | Valli     | Pataballa   | 134       |             6 | 2023-10-20 |
+| 29 | Diana     | Lorentz     | 135       |             2 | 2023-09-05 |
+| 30 | Nancy     | Greenberg   | 136       |             3 | 2023-09-11 |
+| 31 | Daniel    | Faviet      | 137       |             1 | 2023-09-25 |
+| 32 | john      | Chen        | 138       |             2 | 2023-12-08 |
+| 33 | Ismael    | Sciarra     | 139       |             3 | 2023-12-10 |
+| 34 | Luis      | Popp        | 140       |             5 | 2023-12-12 |
+| 35 | Den       | Raphaely    | 141       |            11 | 2023-12-14 |
+| 36 | Alexander | Khoo        | 142       |            10 | 2023-12-16 |
+| 37 | Shelli    | Baida       | 143       |             9 | 2023-12-18 |
+| 38 | Sigal     | Tobias      | 144       |             8 | 2023-12-20 |
+| 39 | Guy       | Himuro      | 145       |             7 | 2023-12-22 |
+| 40 | Karen     | Colmenares  | 146       |             6 | 2023-12-24 |
+| 41 | Matthew   | Weiss       | 147       |             5 | 2022-12-08 |
+| 42 | Adam      | Fripp       | 148       |             4 | 2022-12-12 |
+| 43 | Payam     | Kaufling    | 149       |             3 | 2022-12-20 |
+| 44 | Shanta    | Vollman     | 150       |             2 | 2022-12-25 |
+| 45 | Kevin     | Mourgos     | 151       |             5 | 2022-11-06 |
+| 46 | Julia     | Nayer       | 152       |             6 | 2022-11-10 |
+| 47 | Irene     | Mikkilineni | 200       |             5 | 2022-11-15 |
+| 48 | James     | Landry      | 201       |            11 | 2022-11-20 |
+| 49 | Steven    | Markle      | 222       |            12 | 2022-11-25 |
+| 50 | Laura     | Bissot      | 293       |            16 | 2022-09-05 |
++----+-----------+-------------+-----------+---------------+------------+
+50 rows in set (0.00 sec)
+
+mysql> SELECT first,last,productname,orderdate
+    -> FROM orders
+    -> INNER JOIN products
+    -> ON orders.productld = products.productlabel
+    -> WHERE year(orderdate) = 2023;
+Empty set (0.00 sec)
+
+mysql> SELECT first,last,productname,orderdate
+    -> FROM orders
+    -> INNER JOIN products
+    -> ON orders.productld = products.productlabel
+    -> WHERE year(orderdate) = 2022;
+Empty set (0.00 sec)
+
+mysql>
